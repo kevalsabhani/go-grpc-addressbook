@@ -1,0 +1,36 @@
+syntax = "proto3";
+package protofiles;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/kevalsabhani/go-protobuf/protofiles";
+
+message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+}
+
+enum PhoneType {
+    UNSPECIFIED = 0;
+    MOBILE = 1;
+    HOME = 2;
+    WORK = 3;
+}
+
+message Person {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    repeated PhoneNumber phones = 4;
+    google.protobuf.Timestamp last_updated = 5;
+}
+
+message AddressBook {
+    repeated Person people = 1;
+}
+
+message None {}
+
+service PersonService {
+    rpc GetAddressBook(None) returns (AddressBook) {}
+}
